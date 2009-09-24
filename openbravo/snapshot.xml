@@ -30,12 +30,13 @@
     <mkdir dir="${basedir}${fs}temp" />
 	<echo message="Creating a database backup..." />
 	<exec executable="pg_dump" failonerror="true">
+	  <env key="PGUSER" value="${bbdd.systemUser}" />
+	  <env key="PGPASSWORD" value="${bbdd.systemPassword}" />
 	  <arg value="-v" />
         <arg value="-b" />
 	  <arg value="-Fc" />
 	  <arg value="-hlocalhost" />
 	  <arg value="-p5432" />
-	  <arg value="-U${bbdd.systemUser}" />
 	  <arg value="-O" />
 	  <arg value="-f${basedir}${fs}temp${fs}openbravo.backup" />
 	  <arg value="${bbdd.sid}" />
@@ -81,10 +82,11 @@
     </sql>
 	<echo message="Restoring the backup file..." />
 	<exec executable="pg_restore" failonerror="true">
+	  <env key="PGUSER" value="${bbdd.systemUser}" />
+	  <env key="PGPASSWORD" value="${bbdd.systemPassword}" />
 	  <arg value="-v" />
 	  <arg value="-hlocalhost" />
 	  <arg value="-p5432" />
-	  <arg value="-U${bbdd.systemUser}" />
 	  <arg value="-d${bbdd.sid}" />
 	  <arg value="-O" />
 	  <arg value="${basedir}${fs}temp${fs}openbravo.backup" />

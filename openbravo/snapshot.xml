@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+*************************************************************************
+* The contents of this file are subject to the Openbravo  Public  License
+* Version  1.0  (the  "License"),  being   the  Mozilla   Public  License
+* Version 1.1  with a permitted attribution clause; you may not  use this
+* file except in compliance with the License. You  may  obtain  a copy of
+* the License at http://www.openbravo.com/legal/license.html
+* Software distributed under the License  is  distributed  on  an "AS IS"
+* basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+* License for the specific  language  governing  rights  and  limitations
+* under the License.
+* The Original Code is Openbravo ERP.
+* The Initial Developer of the Original Code is Openbravo SL
+* All portions are Copyright (C) 2009 Openbravo SL
+* All Rights Reserved.
+* Contributor(s):  ______________________________________.
+************************************************************************
+-->
+<project name="snapshot" default="snapshot" basedir=".">
+  <property environment="env" />
+  <property name="base.config" location="config" />
+  <property file="${base.config}/Openbravo.properties" />
+  <property name="fs" value="${file.separator}" />
+  <target name="snapshot">
+    <echo message="Creating instance snapshot..." />
+    <echo message="Making temp folder..." />
+    <echo message="basedir ${basedir}" />
+    <mkdir dir="${basedir}${fs}temp" />
+	<echo message="Creating a database backup..." />
+	<exec executable="pg_dump" failonerror="true">
+	  <arg value="-v" />
+        <arg value="-b" />
+	  <arg value="-Fc" />
+	  <arg value="-hlocalhost" />
+	  <arg value="-p5432" />
+	  <arg value="-U${bbdd.systemUser}" />
+	  <arg value="-O" />
+	  <arg value="-f${basedir}${fs}temp${fs}openbravo.backup" />
+	  <arg value="${bbdd.sid}" />
+	</exec>
+	<echo message="Making a zip..." />
+    <tstamp>
+      <format property="filename" pattern="yyyy-MM-dd_HH-mm-ss"/>
+    </tstamp>
+	<zip destfile="${basedir}${fs}..${fs}${filename}.zip" 
+	     basedir="${basedir}" />
+  </target>
+</project>

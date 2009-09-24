@@ -37,7 +37,6 @@
 	  <arg value="-p5432" />
 	  <arg value="-U${bbdd.systemUser}" />
 	  <arg value="-O" />
-	  <arg value="-W" />
 	  <arg value="-f${basedir}${fs}temp${fs}openbravo.backup" />
 	  <arg value="${bbdd.sid}" />
 	</exec>
@@ -88,7 +87,6 @@
 	  <arg value="-U${bbdd.systemUser}" />
 	  <arg value="-d${bbdd.sid}" />
 	  <arg value="-O" />
-	  <arg value="-W" />
 	  <arg value="${basedir}${fs}temp${fs}openbravo.backup" />
 	</exec>
   </target>

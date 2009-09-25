@@ -23,6 +23,9 @@
   <property name="base.lib" location="lib" />
   <property file="${base.config}/Openbravo.properties" />
   <property name="fs" value="${file.separator}" />
+  <property name="host" value="localhost" />
+  <property name="port" value="5432" />
+  <property name="bk.file" value="${basedir}${fs}temp${fs}openbravo.backup" />
   <target name="snapshot">
     <echo message="Creating instance snapshot..." />
     <echo message="Making temp folder..." />
@@ -33,12 +36,12 @@
 	  <env key="PGUSER" value="${bbdd.systemUser}" />
 	  <env key="PGPASSWORD" value="${bbdd.systemPassword}" />
 	  <arg value="-v" />
-        <arg value="-b" />
+	  <arg value="-b" />
 	  <arg value="-Fc" />
-	  <arg value="-hlocalhost" />
-	  <arg value="-p5432" />
+	  <arg value="-h${host}" />
+	  <arg value="-p${port}" />
 	  <arg value="-O" />
-	  <arg value="-f${basedir}${fs}temp${fs}openbravo.backup" />
+	  <arg value="-f${bk.file}" />
 	  <arg value="${bbdd.sid}" />
 	</exec>
 	<echo message="Making a zip..." />
@@ -50,7 +53,7 @@
   </target>
   <target name="check.backup">
 	<echo message="Checking if openbravo.backup file exists in ${basedir}${fs}temp folder..." />
-	<available file="${basedir}${fs}temp${fs}openbravo.backup" property="bk.exists" />
+	<available file="${bk.file}" property="bk.exists" />
   </target>
   <target name="restore" depends="check.backup" if="bk.exists">
 	<echo message="Deleting the database ..." />
@@ -85,11 +88,11 @@
 	  <env key="PGUSER" value="${bbdd.systemUser}" />
 	  <env key="PGPASSWORD" value="${bbdd.systemPassword}" />
 	  <arg value="-v" />
-	  <arg value="-hlocalhost" />
-	  <arg value="-p5432" />
+	  <arg value="-h${host}" />
+	  <arg value="-p${port}" />
 	  <arg value="-d${bbdd.sid}" />
 	  <arg value="-O" />
-	  <arg value="${basedir}${fs}temp${fs}openbravo.backup" />
+	  <arg value="${bk.file}" />
 	</exec>
   </target>
 </project>

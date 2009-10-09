@@ -2,7 +2,7 @@ CmdUtils.CreateCommand({
   names: ["obs"],
   description: "Ubiquity command for search in wiki.openbravo.com.",
   help: "s <b>some seach string</b>.",
-  author: {name: "Iván Perdomo", email: "ivan.perdomo@openbravo.com"},
+  author: {name: "Iván Perdomo", email: "ivan.perdomo{at}openbravo.com"},
   license: "GPL",
   homepage: "http://katratxo.wordpress.com/",
   arguments: [{role: 'object', nountype: noun_arb_text}],

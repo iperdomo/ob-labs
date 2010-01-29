@@ -12,7 +12,7 @@
 * under the License.
 * The Original Code is Openbravo ERP.
 * The Initial Developer of the Original Code is Openbravo SL
-* All portions are Copyright (C) 2009 Openbravo SL
+* All portions are Copyright (C) 2009-2010 Openbravo SL
 * All Rights Reserved.
 * Contributor(s):  ______________________________________.
 ************************************************************************
@@ -27,11 +27,11 @@
   <property name="port" value="5432" />
   <property name="bk.file" value="${basedir}${fs}temp${fs}openbravo.backup" />
   <target name="snapshot">
-    <echo message="Creating instance snapshot..." />
-    <echo message="Making temp folder..." />
+    <echo message="Creating instance snapshot..." level="info" />
+    <echo message="Making temp folder..." level="info"/>
     <echo message="basedir ${basedir}" />
     <mkdir dir="${basedir}${fs}temp" />
-	<echo message="Creating a database backup..." />
+	<echo message="Creating a database backup..." level="info"/>
 	<exec executable="pg_dump" failonerror="true">
 	  <env key="PGUSER" value="${bbdd.systemUser}" />
 	  <env key="PGPASSWORD" value="${bbdd.systemPassword}" />
@@ -44,7 +44,7 @@
 	  <arg value="-f${bk.file}" />
 	  <arg value="${bbdd.sid}" />
 	</exec>
-	<echo message="Making a zip..." />
+	<echo message="Making a zip..." level="info" />
     <tstamp>
       <format property="filename" pattern="yyyy-MM-dd_HH-mm-ss"/>
     </tstamp>
@@ -52,7 +52,7 @@
 	     basedir="${basedir}" />
   </target>
   <target name="check.backup">
-	<echo message="Checking if openbravo.backup file exists in ${basedir}${fs}temp folder..." />
+	<echo message="Checking if openbravo.backup file exists in ${basedir}${fs}temp folder..." level="info" />
 	<available file="${bk.file}" property="bk.exists" />
   </target>
   <target name="restore" depends="check.backup" if="bk.exists">
@@ -65,10 +65,10 @@
         </fileset>
       </classpath>
       <transaction>
-        DROP DATABASE ${bbdd.sid};
+        DROP IF EXISTS DATABASE ${bbdd.sid};
       </transaction>
     </sql>
-    <echo message="Creating the database..." />
+    <echo message="Creating the database..." level="info" />
     <sql driver="${bbdd.driver}" url="${bbdd.url}" userid="${bbdd.systemUser}" password="${bbdd.systemPassword}" onerror="abort" autocommit="true">
       <classpath>
         <fileset dir="${base.lib}">
@@ -83,7 +83,7 @@
                   TEMPLATE=template0;
       </transaction>
     </sql>
-	<echo message="Restoring the backup file..." />
+	<echo message="Restoring the backup file..." level="info"/>
 	<exec executable="pg_restore" failonerror="true">
 	  <env key="PGUSER" value="${bbdd.systemUser}" />
 	  <env key="PGPASSWORD" value="${bbdd.systemPassword}" />

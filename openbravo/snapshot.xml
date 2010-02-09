@@ -48,7 +48,7 @@
     <tstamp>
       <format property="filename" pattern="yyyy-MM-dd_HH-mm-ss"/>
     </tstamp>
-	<zip destfile="${basedir}${fs}..${fs}${filename}.zip" 
+	<zip destfile="${basedir}${fs}..${fs}${context.name}-${filename}.zip"
 	     basedir="${basedir}" />
   </target>
   <target name="check.backup">

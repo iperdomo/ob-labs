@@ -65,7 +65,7 @@
         </fileset>
       </classpath>
       <transaction>
-        DROP IF EXISTS DATABASE ${bbdd.sid};
+        DROP DATABASE ${bbdd.sid} IF EXISTS;
       </transaction>
     </sql>
     <echo message="Creating the database..." level="info" />

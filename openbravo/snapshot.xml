@@ -18,6 +18,22 @@
 ************************************************************************
 -->
 <project name="snapshot" default="snapshot" basedir=".">
+  <description>
+   This script creates and snapshot of Openbravo
+
+   * To create a snapshot, place this xml file in the Openbravo sources
+     and execute:
+     $ ant -f snapshot.xml
+
+   * To restore an snapshot,
+     - Remove the sources folder and unzip the archive file, e.g.:
+       $ rm -rf /path/to/OpenbravoERP
+       $ unzip openbravo-timestamp.zip -d /path/to/OpenbravoERP
+
+     - Move inside the Openbravo sources and run the restore target:
+       $ cd /path/to/OpenbravoERP
+       /path/to/OpenbravoERP $ ant -f snapshot.xml restore
+  </description>
   <property environment="env" />
   <property name="base.config" location="config" />
   <property name="base.lib" location="lib" />
@@ -26,7 +42,7 @@
   <property name="host" value="localhost" />
   <property name="port" value="5432" />
   <property name="bk.file" value="${basedir}${fs}temp${fs}openbravo.backup" />
-  <target name="snapshot">
+  <target name="snapshot" description="Creates an archive file (zip) with a database dump and the sources">
     <echo message="Creating instance snapshot..." level="info" />
     <echo message="Making temp folder..." level="info"/>
     <echo message="basedir ${basedir}" />
@@ -55,7 +71,7 @@
 	<echo message="Checking if openbravo.backup file exists in ${basedir}${fs}temp folder..." level="info" />
 	<available file="${bk.file}" property="bk.exists" />
   </target>
-  <target name="restore" depends="check.backup" if="bk.exists">
+  <target name="restore" depends="check.backup" if="bk.exists" description="Drops the database and restores the backup">
 	<echo message="Deleting the database ..." />
     <sql driver="${bbdd.driver}" url="${bbdd.url}" userid="${bbdd.systemUser}" password="${bbdd.systemPassword}" onerror="abort" autocommit="true">
       <classpath>

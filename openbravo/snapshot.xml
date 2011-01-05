@@ -2,7 +2,7 @@
 <!--
 *************************************************************************
 * The contents of this file are subject to the Openbravo  Public  License
-* Version  1.0  (the  "License"),  being   the  Mozilla   Public  License
+* Version  1.1  (the  "License"),  being   the  Mozilla   Public  License
 * Version 1.1  with a permitted attribution clause; you may not  use this
 * file except in compliance with the License. You  may  obtain  a copy of
 * the License at http://www.openbravo.com/legal/license.html
@@ -11,8 +11,8 @@
 * License for the specific  language  governing  rights  and  limitations
 * under the License.
 * The Original Code is Openbravo ERP.
-* The Initial Developer of the Original Code is Openbravo SL
-* All portions are Copyright (C) 2009-2010 Openbravo SL
+* The Initial Developer of the Original Code is Openbravo SLU
+* All portions are Copyright (C) 2009-2011 Openbravo SLU
 * All Rights Reserved.
 * Contributor(s):  ______________________________________.
 ************************************************************************
@@ -42,6 +42,7 @@
   <property name="host" value="localhost" />
   <property name="port" value="5432" />
   <property name="bk.file" value="${basedir}${fs}temp${fs}openbravo.backup" />
+  <property name="exclude" value="" />
   <target name="snapshot" description="Creates an archive file (zip) with a database dump and the sources">
     <echo message="Creating instance snapshot..." level="info" />
     <echo message="Making temp folder..." level="info"/>
@@ -65,7 +66,7 @@
       <format property="filename" pattern="yyyy-MM-dd_HH-mm-ss"/>
     </tstamp>
 	<zip destfile="${basedir}${fs}..${fs}${context.name}-${filename}.zip"
-	     basedir="${basedir}" />
+	     basedir="${basedir}" excludes="${exclude}" encoding="UTF-8" />
   </target>
   <target name="check.backup">
 	<echo message="Checking if openbravo.backup file exists in ${basedir}${fs}temp folder..." level="info" />

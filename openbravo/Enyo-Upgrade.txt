@@ -1,0 +1,78 @@
+
+== Introduction ==
+
+Openbravo Mobile ships an Enyo custom build, based on the bootplate distribution.
+
+The bootplate contents is splitted in two parts:
+
+* Enyo core + libs (layout, onyx, notification)
+* Build tools
+
+The main idea is to ship as part of Openbravo Mobile (org.openbravo.client.mobile)
+the necessary code to run Enyo based applications, and leave the developer build
+tools in a separate repository (org.openbravo.client.mobile.dev)
+
+== System Requirements ==
+
+* The build tool is based on nodejs http://nodejs.org 
+
+== Steps to upgrade Enyo ==
+
+* Download the bootplate distribution from: http://enyojs.com/get-enyo
+
+* Extract the zip contents
+
+* Download the Notification plugin from the Enyo community plugins
+  http://enyojs.com/gallery/#MacFJA.Notification
+
+* Edit the file source/package.js file and remove the references to App.js and App.css
+
+* Run the deploy.sh (tools/deploy.sh), and check the output folder
+
+* Under the build folder, rename the app.js and app.css to lib.js and lib.css repectively
+
+* Copy the enyo, lib, build folder contents to the module's web/org.openbravo.client.mobile
+  folder
+
+* The rest of the bootplate folder goes to the org.openbravo.client.mobile.dev
+
+=== Example of the module folder structure ===
+
+<pre>
+.
+├── legal
+├── lib
+├── src
+├── src-db
+└── web
+    └── org.openbravo.client.mobile
+        ├── assets
+        ├── build
+        ├── enyo
+        ├── index.html
+        ├── lib
+        └── source
+</pre>
+
+==== Details of the web/org.openbravo.client.mobile folder ====
+
+<pre>
+.
+├── assets               # contains the list of asset files
+├── build                # the build folder from the custom build
+│   ├── enyo.css 
+│   ├── enyo.js
+│   ├── lib.css
+│   └── lib.js
+├── enyo                 # direct copy of the enyo folder from bootplate 
+│   ├── enyo.js
+│   ├── loader.js
+│   └── source
+├── index.html
+├── lib                  # direct copy of the lib folder from bootplate
+│   ├── layout
+│   ├── notification
+│   ├── onyx
+│   └── vendor
+└── source               # Application sources
+</pre> 
